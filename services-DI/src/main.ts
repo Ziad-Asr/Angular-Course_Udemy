@@ -47,3 +47,28 @@ bootstrapApplication(AppComponent).catch((err) => console.error(err));
 //         task.id === taskId ? { ...task, status: newStatus } : task
 //     )
 // );
+
+// ______________________________________________________________________________________________________________________________
+// ______________________________________________________________________________________________________________________________
+
+// Look at (task.module.ts) on the injection token
+// injected in the (task-list)
+// Wantch video 187
+
+// export const TASKSTATUSOPTIONSToken = new InjectionToken<taskStatusOptions>(
+//  'task-status-options'
+// );
+// 'task-status-options' => the title of the token
+
+// providers: [
+//   {
+//     provide: TASKSTATUSOPTIONS,
+//     useValue: TaskStatusOptions
+//   },
+// ],
+
+// useClass => to inject (components)
+// useValue => to inject (value)
+// [[ useFactoru: () => {} ]] => Accepts the value and make some changes on it
+
+//** I can also export this provider in the model file

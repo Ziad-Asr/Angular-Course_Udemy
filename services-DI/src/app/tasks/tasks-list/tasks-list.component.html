@@ -1,11 +1,21 @@
 <header>
   <h2>My Tasks</h2>
-  <p>
+  <!-- <p>
     <select (change)="onChangeTasksFilter(filter.value)" #filter>
       <option value="all">All</option>
       <option value="open">Open</option>
       <option value="in-progress">In-Progress</option>
       <option value="done">Completed</option>
+    </select>
+  </p> -->
+
+  <p>
+    <select (change)="onChangeTasksFilter(filter.value)" #filter>
+      <option value="all">All</option>
+
+      @for(option of tasksStatusOptions; track option.value) {
+      <option [value]="option.value">{{option.text}}</option>
+      }
     </select>
   </p>
 </header>
