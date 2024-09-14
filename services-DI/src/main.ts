@@ -22,6 +22,25 @@ bootstrapApplication(AppComponent).catch((err) => console.error(err));
 // ______________________________________________________________________________________________________________________________
 // ______________________________________________________________________________________________________________________________
 
+// Instead of using [[[@Injectable({providedIn: 'root',})]]] we can use [[[ providers: [TaskService] ]]] in [[[[[[ the (main.ts)]]]]]]
+//******** (((The downside))) of this way that it uses the code inside the service from the intialization of the app event if it is not important
+// That is because it used in the (bootstrapApplication), so angular think it is important from the start.
+// bootstrapApplication(AppComponent, {providers: [TaskService]}).catch((err) => console.error(err));
+// That named (Environment injector)
+
+// Instead of using [[[@Injectable({providedIn: 'root',})]]] also I can use [[[ providers: [TaskService] ]]] inside [[[[[[Any component]]]]]]
+// That makes the service be used inside 1)this component 2)it's child components
+//********* (The downside) of this way that it give each component (a separated new instance of the servace)
+// That named (Elemenet injector)
+
+// In summary there are (3 way) to inject a service
+// 1) @Injectable({providedIn: 'root'}) => in the service itself. (Recommended)
+// 2) Environment injector => bootstrapApplication(AppComponent, {providers: [TaskService]}).catch((err) => console.error(err));
+// 3) Element injector => [[[ providers: [TaskService] ]]] inside the component
+
+// ______________________________________________________________________________________________________________________________
+// ______________________________________________________________________________________________________________________________
+
 // The best here is to (replace) than mutating the object inside the array.
 // this.tasks.update((oldTasks) =>
 //     oldTasks.map((task) =>
