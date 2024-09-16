@@ -1,11 +1,42 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 
 import { AppComponent } from './app/app.component';
-import { provideHttpClient } from '@angular/common/http';
+import {
+  HttpEventType,
+  HttpHandlerFn,
+  HttpRequest,
+  provideHttpClient,
+  withInterceptors,
+} from '@angular/common/http';
+import { tap } from 'rxjs';
 
-bootstrapApplication(AppComponent, { providers: [provideHttpClient()] }).catch(
-  (err) => console.error(err)
-);
+function loggingInterceptor(
+  request: HttpRequest<unknown>,
+  next: HttpHandlerFn
+) {
+  const req = request.clone({
+    headers: request.headers.set('X-DEBUG', 'TESTING'),
+  }); // I clone the request and send the modified one in this way, because I can't mutate the origonal request
+
+  console.log('[Outgoing request]');
+  console.log(request);
+
+  return next(req).pipe(
+    tap({
+      next: (event) => {
+        if (event.type === HttpEventType.Response) {
+          console.log('[Incoming response]');
+          console.log(event.status);
+          console.log(event.body);
+        }
+      },
+    })
+  );
+}
+
+bootstrapApplication(AppComponent, {
+  providers: [provideHttpClient(withInterceptors([loggingInterceptor]))],
+}).catch((err) => console.error(err));
 
 // { providers: [provideHttpClient()] } => I must add this to the (bootstrapApplication) to avoid (NullInjectorError)
 
@@ -29,3 +60,6 @@ bootstrapApplication(AppComponent, { providers: [provideHttpClient()] }).catch(
 // })
 
 //***** RXJS operators (up till now) => [map() - catchError() - tap()]
+
+// Interceptor => Is a function excuted with every request (get - post - put - delete - patch - ...)
+// With interceptor you can manipulate 1-request 2-response
