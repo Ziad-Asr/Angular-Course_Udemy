@@ -22,6 +22,35 @@ bootstrapApplication(AppComponent).catch((err) => console.error(err));
 
 //-------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------
+
+//***** This is how I get the value of all the inputs inside the form (with each key strock)
+
+// private form = viewChild.required<NgForm>('form');
+// private distroyRef = inject(DestroyRef);
+//  constructor() {
+//     afterNextRender(() => {
+//       const subscription = this.form()
+//         .valueChanges?.pipe(debounceTime(500))
+//         .subscribe({
+//           next: (value) =>
+//             window.localStorage.setItem(
+//               'saved-login-form',
+//               JSON.stringify({ email: value.email })
+//             ),
+//         });
+//       this.distroyRef.onDestroy(() => subscription?.unsubscribe());
+//     });
+//  }
+
+// I used here (afterNextRender) because this (NgForm) is not available from intialization,
+// so if I want to access it should be after the whole render of  the page
+// this.form().valueChanges; => Returns an (observable), that emits a new value each time form changes.
+
+// .pipe(debounceTime(500)) => Make sure that the (subscription is only triggred after 500ms when user stop typing)
+// If the value changes before 500ms afetr user stops writting so this function start counting again and after 500ms the subscription is triggered
+
+//-------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------
 
 // Once I added (ngModule) to an input, it gets some (classes) and (properties) to descripe it.
