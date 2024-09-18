@@ -86,6 +86,29 @@ bootstrapApplication(AppComponent).catch((err) => console.error(err));
 //-------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------
 
+// #######################
+// ### Template-driven ### Intialized in the (.ts file)
+// #######################
+
+// step 1: To intialize your form in the component
+// form = new FormGroup({
+//   email: new FormControl(''),
+//   password: new FormControl(''),
+// });
+
+// step 2: To sync this form to the emplate
+// <form [formGroup]="form"></form>
+// <input [formControl]="form.controls.email" /> - ((or)) - <input formControlName="password" />
+
+// this form varaible holds the (form object) in the (DOM), as template-driven.
+// And with that I can access 1) the input inself (this.form.value.email) - 2) the value onside the input (this.form.controls.email)
+
+// [asyncValidators] => return an (observable) [for example it used for sending (http requests) ]
+
+//-------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------
+
 // ((2 way binding)) [(ngModule)]
 // If I want to access the values in the form with each key strock
 // used => If want the to make a change this each key strock in an input
