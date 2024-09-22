@@ -105,6 +105,78 @@ bootstrapApplication(AppComponent).catch((err) => console.error(err));
 
 // [asyncValidators] => return an (observable) [for example it used for sending (http requests) ]
 
+// To reset the form :-
+// --------------------
+// 1) <button type="reset">...</button>
+// 2) this.form.reset();
+
+// formControlName="confirmPassword" => here in (((formControlName))) I type the same name in the ((FormGroup))
+
+// -------------------------------
+
+// Nesting in forms
+//-----------------
+// I can use nesting in form be (adding a new [formGroup]) inside the whole big formGroup
+// and wrap these child controls in the template with a wrapper contain ((( formGroupName="passwords" ] )))
+
+// passwords: new FormGroup(
+//     {
+//       password: new FormControl('', {
+//         validators: [Validators.minLength(6), Validators.required],
+//       }),
+//       confirmPassword: new FormControl('', {
+//         validators: [Validators.minLength(6), Validators.required],
+//       }),
+//     },
+//     { validators: [equalValues] }
+// ),
+
+// ************ (( { validators: [equalValues] } )) => I can add validation on (( FormGroup ))
+
+// <div class="control-row" formGroupName="passwords">
+//     <div class="control">
+//       <label for="password">Password</label>
+//       <input id="password" type="password" name="password" formControlName="password" />
+//     </div>
+
+//     <div class="control">
+//       <label for="confirm-password">Confirm Password</label>
+//       <input id="confirm-password" type="password" name="confirm-password" formControlName="confirmPassword" />
+//     </div>
+//   </div>
+
+// -------------------------------
+
+// FormAray
+//----------
+// use (formArrayName="source") on parent wrapper, and (formArrayName="0 - 1 - ....") on each child.
+
+// source: new FormArray([
+//     new FormControl(false),
+//     new FormControl(false),
+//     new FormControl(false),
+// ]),
+
+// <fieldset formArrayName="source">
+//     <legend>How did you find us?</legend>
+//     <div class="control">
+//       <input type="checkbox" id="google" name="acquisition" value="google" formArrayName="0" />
+//       <label for="google">Google</label>
+//     </div>
+
+//     <div class="control">
+//       <input type="checkbox" id="friend" name="acquisition" value="friend" formArrayName="1" />
+//       <label for="friend">Referred by friend</label>
+//     </div>
+
+//     <div class="control">
+//       <input type="checkbox" id="other" name="acquisition" value="other" formArrayName="2" />
+//       <label for="other">Other</label>
+//     </div>
+//  </fieldset>
+
+// -------------------------------
+
 //-------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------
