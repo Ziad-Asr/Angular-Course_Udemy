@@ -99,6 +99,54 @@ bootstrapApplication(AppComponent, appConfig).catch((err) =>
 
 // -----------------------------------------------------------------
 
+// // I can add data in routing that can be extracted from the component
+
+// {
+//   path: 'users/:userId',
+//   component: UserTasksComponent,
+//   children: userRoutes,
+//   data: {
+//     message: 'Hello!',
+//   },
+// },
+
+// message = input.required<String>(); ===> Make sure to put ((( withComponentInputBinding() ))) in application config
+
+// ******************************************
+// Data => For (static data)
+// resolve => For (dynamic data)
+// title => Will be the title of this page (Can be 1)static 2)dynamic [using (resolve function)] )
+// guards (canMatch - canActivate - ...)
+// ******************************************
+
+// (resolve) => A function [in older version it was ((( classed based )))]
+// *** EX:- (This function types in user-tasks.component because there are the data I need) [It is not really important here to use this way]
+// export const resolveUserName: ResolveFn<string> = (
+//   activatedRoute: ActivatedRouteSnapshot,
+//   routerState: RouterStateSnapshot
+// ) => {
+//   const usersService = inject(UsersService);
+//   const userName =
+//     usersService.users.find(
+//       (u) => u.id === activatedRoute.paramMap.get('userId')
+//     )?.name || '';
+
+//   return userName;
+// };
+
+// userName_From_ResolveFn = input.required<string>(); ==> Extract in the component
+
+// ***** The default is that (when the [route] change) => the (resolve function) get reexcuted
+// ***** (That isn't happening when (query params) changes)
+// ***** runGuardsAndResolvers: 'paramsOrQueryParamsChange' => This code pervents the default behaviour and make it reecuted when 1)params 2)Query parms changes
+// (add this to routes)
+
+// Guard
+// canMatch: [dummyCanMatch] => Function return (true - false) to (allow or prevent) accessing routes
+// canDeactivate => Allows the user (to leave) the page or not
+
+// -----------------------------------------------------------------
+
 // // This shold be the configuration any time I use
 // provideRouter(
 //   routes,
@@ -107,3 +155,20 @@ bootstrapApplication(AppComponent, appConfig).catch((err) =>
 // ),
 
 // -----------------------------------------------------------------
+
+// If I make an action in a page that make sum changes
+// instead of (reloading) to these changes
+// Use this code
+
+// 1) runGuardsAndResolvers: 'always', => In routes (To make sure that component reloads whn anything changes inside it)
+// 2)
+// private router = inject(Router);
+//   private activatedRoute = inject(ActivatedRoute);
+
+//   onComplete() {
+//     this.router.navigate(['./'], { //navigate to the same current url
+//       relativeTo: this.activatedRoute, //relative to the current component
+//       onSameUrlNavigation: 'reload', //reload
+//       queryParamsHandling: 'preserve' //keep current query params
+//     });
+// }
